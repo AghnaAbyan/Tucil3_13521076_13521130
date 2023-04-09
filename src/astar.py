@@ -1,44 +1,59 @@
-from graph import *
+class Node:
+    def __init__(self,id,fValue):
+        self.id = id
+        self.fValue = fValue
+        self.parents = []
+    
+    def setParent(self,parent_node):
+        for i in parent_node.parents:
+            self.parents.append(i)
+        self.parents.append(parent_node.id)
 
-def getFvalue(adj_m, heuristik, parent_node, node):
-    g = parent_node[1] - heuristik[parent_node[0]] + adj_m[parent_node[0]][node]
+def calculateFValue(adj_m, heuristik, parent_node, node):
+    g = parent_node.fValue - heuristik[parent_node.id] + adj_m[parent_node.id][node]
     h = heuristik[node]
     return g+h
 
-def astar(adj_m,heuristik,start_node,goal_node):
+def astar(adj_m,heuristik,s_node,g_node):
+    # initiate start_node and goal_node
+    start_node = Node(s_node,heuristik[s_node])
+    goal_node = Node(g_node,0)
 
+    # visited, open_nodes
     visited = []
     open_nodes = []
-    open_nodes.append([start_node,heuristik[start_node]])
 
-    # parent dictionary
-    parent = {}
-    for i in range(len(adj_m[0])):
-        parent[i] = None
-    print(parent)
+    # visit start node
+    open_nodes.append(start_node)
+    visited.append(start_node.id)
 
     while len(open_nodes) > 0 :
-        # sort open nodes by f values (g+h)
-        open_nodes.sort(key=lambda x: x[1])
+        # sort open nodes by f values
+        open_nodes.sort(key=lambda x: x.fValue)
+
+        # visit open_nodes with smallest fValue
         current_node = open_nodes.pop(0)
-        visited.append(current_node[0])
+        visited.append(current_node.id)
 
-        if current_node[0]==goal_node:
-            path = []
-            while current_node[0] != start_node:
-                path.append(current_node[0])
-                current_node[0] = parent[current_node[0]]
-            path.append(start_node)
-            return path[::-1]
+        # current node is goal node
+        if current_node.id==goal_node.id:
+            current_node.parents.append(current_node.id)
+            return current_node.parents
 
-        neighbor = []
+        # find neighbors of current node
+        neighbors = []
         for i in range(len(adj_m[0])):
-            if (adj_m[current_node[0]][i]!=0 and (i not in visited)):
-                neighbor.append(i)
+            if (adj_m[current_node.id][i]!=0 and (i not in visited)):
+                neighbors.append(i)
 
-        for i in range(len(neighbor)):
-            parent[neighbor[i]] = current_node[0]
-            open_nodes.append([neighbor[i],getFvalue(adj_m,heuristik,current_node,neighbor[i])])
+        # for each neighbors append to open nodes
+        for i in range(len(neighbors)):
+            newFvalue = calculateFValue(adj_m,heuristik,current_node,neighbors[i])
+            newNode = Node(neighbors[i],newFvalue)
+            newNode.setParent(current_node)
+            open_nodes.append(newNode)
+
+    return None
 
 if __name__ == "__main__":
     adj_m = [[0,1,0,0,0,10],
