@@ -9,6 +9,18 @@ class Node:
             self.parents.append(i)
         self.parents.append(parent_node.id)
 
+    def print(self):
+        print(self.id,", ",self.fValue,", ",self.parents)
+
+    def getDistance(self,heuristik):
+        return self.fValue - heuristik[self.id]
+
+def printAll(nodes):
+    print("---")
+    for i in nodes:
+        i.print()
+    print("---")
+
 def calculateFValue(adj_m, heuristik, parent_node, node):
     g = parent_node.fValue - heuristik[parent_node.id] + adj_m[parent_node.id][node]
     h = heuristik[node]
@@ -30,6 +42,7 @@ def astar(adj_m,heuristik,s_node,g_node):
     while len(open_nodes) > 0 :
         # sort open nodes by f values
         open_nodes.sort(key=lambda x: x.fValue)
+        # printAll(open_nodes)
 
         # visit open_nodes with smallest fValue
         current_node = open_nodes.pop(0)
@@ -38,7 +51,7 @@ def astar(adj_m,heuristik,s_node,g_node):
         # current node is goal node
         if current_node.id==goal_node.id:
             current_node.parents.append(current_node.id)
-            return current_node.parents
+            return current_node.parents, current_node.getDistance(heuristik)
 
         # find neighbors of current node
         neighbors = []
@@ -53,15 +66,16 @@ def astar(adj_m,heuristik,s_node,g_node):
             newNode.setParent(current_node)
             open_nodes.append(newNode)
 
-    return None
+    return None,None
 
 if __name__ == "__main__":
-    adj_m = [[0,1,0,0,0,10],
-             [1,0,2,1,0,0],
-             [0,2,0,0,5,0],
-             [0,1,0,0,3,4],
-             [0,0,5,3,0,2],
-             [10,0,0,4,2,0]]
-    heuristik = [5,3,4,2,6,0]
-    path = astar(adj_m,heuristik,0,5)
-    print(path)
+    adj_m = [[0,1,0,0,0,10,0],
+             [1,0,2,1,0,0,0],
+             [0,2,0,0,5,0,0],
+             [0,1,0,0,3,4,0],
+             [0,0,5,3,0,2,0],
+             [10,0,0,4,2,0,5],
+             [0,0,0,0,5,0]]
+    heuristik = [5,3,4,2,6,1,0]
+    path,distance = astar(adj_m,heuristik,0,6)
+    print(path,distance)
