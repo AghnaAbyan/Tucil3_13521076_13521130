@@ -56,7 +56,7 @@ def fileReader(lines,start_node,goal_node,distance_method,path_finder_method):
         nodes[i][2] = float(nodes[i][2])
     adj_m = getAdj_m(adj_m_raw,nodes)
     if (path_finder_method==1):
-        return adj_m, nodes_raw
+        return adj_m, nodes
     else:
         return adj_m, getHeuristik(adj_m_raw,nodes,goal_node),nodes
 

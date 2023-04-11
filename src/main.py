@@ -1,4 +1,5 @@
 from astar import astar
+from ucs import ucs
 from filereader import getLines,fileReader
 import visualization as vis
 from flask import Flask, render_template
@@ -87,7 +88,7 @@ while (True):
     # path finding
     if (path_finder_method == '1'):
         adj_m,nodes = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
-        print(adj_m,"\n")
+        path,distance = ucs(adj_m,None,start_node,goal_node)
     else:
         adj_m,heuristik,nodes = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
         path,distance = astar(adj_m,heuristik,start_node,goal_node)
@@ -121,16 +122,3 @@ while (True):
                 gmaps = googlemaps.Client(key='AIzaSyBysSbgLtum7i-eQ3_qMqiMMsVlNHe88Yw')
                 return render_template('map.html',gmaps=gmaps,nodes=nodes,path=path)
             app.run(debug=False)
-
-# from flask import Flask, render_template
-# import googlemaps
-# path = "retegfkh"
-# app = Flask(__name__)
-# @app.route('/')
-# def map():
-#     gmaps = googlemaps.Client(key='AIzaSyBysSbgLtum7i-eQ3_qMqiMMsVlNHe88Yw')
-    
-#     return render_template('map.html',gmaps=gmaps)
-
-# if __name__ == "__main__":
-#     app.run()
