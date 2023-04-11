@@ -43,13 +43,16 @@ def getAdj_m(adj_m_raw,nodes_raw):
                 adj_m[i][j] = haversine(nodes_raw[i],nodes_raw[j])
     return adj_m
 
-def getHeuristik(adj_m_raw,nodes_raw,goal_node):
+def getHeuristik(nodes_raw,goal_node,distance_method):
     heuristik = [0 for i in range(len(nodes_raw))]
     for i in range(len(nodes_raw)):
-        heuristik[i] = haversine(nodes_raw[i],nodes_raw[goal_node])
+        if (distance_method==1):
+            heuristik[i] = euclidean(nodes_raw[i],nodes_raw[goal_node])
+        else:
+            heuristik[i] = haversine(nodes_raw[i],nodes_raw[goal_node])
     return heuristik            
 
-def fileReader(lines,start_node,goal_node,distance_method,path_finder_method):
+def fileReader(lines,goal_node,distance_method,path_finder_method):
     nodes,adj_m_raw = processNodes(lines)
     for i in range(len(nodes)):
         nodes[i][1] = float(nodes[i][1])
@@ -58,7 +61,7 @@ def fileReader(lines,start_node,goal_node,distance_method,path_finder_method):
     if (path_finder_method==1):
         return adj_m, nodes
     else:
-        return adj_m, getHeuristik(adj_m_raw,nodes,goal_node),nodes
+        return adj_m, getHeuristik(nodes,goal_node,distance_method),nodes
 
 if __name__ == "__main__":
     lines = getLines("test/testcase1.txt")
