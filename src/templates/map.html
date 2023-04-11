@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps API</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBysSbgLtum7i-eQ3_qMqiMMsVlNHe88Yw"></script>
+    <script>
+        var points = JSON.parse('{{ nodes | tojson }}');
+        var path = JSON.parse('{{ path | tojson }}');
+
+        function drawBoard() {
+            for (var row = 0; row < board.length; row++) {
+                for (var col = 0; col < board[row].length; col++) {
+                    var cell = document.getElementById("cell" + row + col);
+                    cell.innerHTML = board[row][col];
+                }
+
+            }
+        }
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -6.9013696223394625, lng: 107.60961079331524},
+                zoom: 15
+            });
+
+            for (i=0;i<points.length;i++) {
+                new google.maps.Marker({
+                    position: new google.maps.LatLng(points[i][1], points[i][2]),
+                    map,
+                    title: points[i][0]
+                });
+            }
+
+            newPath=[];
+            for (i=0;i<path.length;i++) {
+                newPath.push(new google.maps.LatLng(path[i][0], path[i][1]));
+            }
+            new google.maps.Polyline({
+                path:newPath,
+                geodesic:true,
+                strokeColor:"#FF0000",
+                strokeOpacity:1.0,
+                strokeWeight:1.5,
+                map: map
+            })
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+</head>
+<body>
+    <pre id="arrPrint"></pre>
+    <script>
+      let arr = [["Jack", "John", "James"],[1,2,3]];
+      document.getElementById("arrPrint").innerHTML = path;
+    //   document.getElementById("arrPrint").innerHTML = points;
+    </script>
+    <div id="map" style="height: 700px; width: 100%;"></div>
+</body>
+</html>
