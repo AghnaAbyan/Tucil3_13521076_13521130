@@ -50,12 +50,15 @@ def getHeuristik(adj_m_raw,nodes_raw,goal_node):
     return heuristik            
 
 def fileReader(lines,start_node,goal_node,distance_method,path_finder_method):
-    nodes_raw,adj_m_raw = processNodes(lines)
-    adj_m = getAdj_m(adj_m_raw,nodes_raw)
+    nodes,adj_m_raw = processNodes(lines)
+    for i in range(len(nodes)):
+        nodes[i][1] = float(nodes[i][1])
+        nodes[i][2] = float(nodes[i][2])
+    adj_m = getAdj_m(adj_m_raw,nodes)
     if (path_finder_method==1):
-        return adj_m
+        return adj_m, nodes_raw
     else:
-        return adj_m, getHeuristik(adj_m_raw,nodes_raw,goal_node)
+        return adj_m, getHeuristik(adj_m_raw,nodes,goal_node),nodes
 
 if __name__ == "__main__":
     lines = getLines("test/testcase1.txt")

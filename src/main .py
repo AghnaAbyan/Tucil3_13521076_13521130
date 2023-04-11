@@ -1,5 +1,6 @@
 from astar import astar
 from filereader import getLines,fileReader
+import visualisation as vis
 
 def printNodesName(path,lines):
     n = (len(lines)-1)//2
@@ -7,6 +8,7 @@ def printNodesName(path,lines):
     for i in range(len(path)):
         print(str(i+1) + ". "+ nodes_name[path[i]])
     print()
+    return nodes_name
 
 # welcome message
 print("Welcome to Path Finder\n")
@@ -14,7 +16,7 @@ print("Welcome to Path Finder\n")
 while (True):
     # home
     print("Please choose an option:")
-    print("1. Run Path Finder\n2. Exit\n")
+    print("1. Run Path Finder\n2. Exit")
     while (True):
         option = int(input(">> "))
         print()
@@ -26,7 +28,7 @@ while (True):
         break
 
     # choose file
-    print("Please choose the file you want to use:")
+    print("Enter file name:")
     while (True):
         fileName = input(">> ")
         print()
@@ -38,7 +40,7 @@ while (True):
 
     # choose distance method
     print("Please choose the distance method calculation:")
-    print("1. Euclidean\n2. Haversine\n")
+    print("1. Euclidean\n2. Haversine")
     while (True):
         distance_method = int(input(">> "))
         print()
@@ -49,7 +51,7 @@ while (True):
 
     # choose path finder method
     print("Please choose path finder method:")
-    print("1. UCS\n2. A*\n")
+    print("1. UCS\n2. A*")
     while (True):
         path_finder_method = int(input(">> "))
         print()
@@ -60,8 +62,8 @@ while (True):
 
     # choose start node
     p = [i for i in range((len(lines)-1)//2)]
-    print("Please choose the start node:")
     printNodesName(p,lines)
+    print("Please choose the start node:")
     while (True):
         start_node = int(input(">> "))-1
         print()
@@ -82,13 +84,26 @@ while (True):
 
     # path finding
     if (path_finder_method == '1'):
-        adj_m = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
+        adj_m,nodes = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
         print(adj_m,"\n")
     else:
-        adj_m,heuristik = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
+        adj_m,heuristik,nodes = fileReader(lines,start_node,goal_node,distance_method,path_finder_method)
         path,distance = astar(adj_m,heuristik,start_node,goal_node)
         if (path==None):
             print("")
         print("Result: ")
         printNodesName(path,lines)
         print("Distance:",round(distance,2),"km\n")
+
+    # visualisation
+    print("Do you want to visualise the graph? (y/n)")
+    while (True):
+        visualisation = input(">> ")
+        print()
+        if (visualisation=='y' or visualisation=='n'):
+            break
+        else:
+            print("Invalid option, please try again\n")
+    if (visualisation=='y'):
+        print("Exit visualisation to continue\n")
+        vis.drawgraph(nodes,adj_m,path)
