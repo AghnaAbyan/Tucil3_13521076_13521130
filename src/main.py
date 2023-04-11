@@ -44,7 +44,8 @@ while (True):
 
     # choose distance method
     print("Please choose the distance method calculation:")
-    print("1. Euclidean\n2. Haversine")
+    print("1. Euclidean, use this if your nodes position is in cartesian coordinate")
+    print("2. Haversine, use this if your nodes position is in latitude and longitude")
     while (True):
         distance_method = int(input(">> "))
         print()
@@ -95,9 +96,11 @@ while (True):
             print("No path found, please make sure that start node and goal node are connected\n")
             isFound = False
         else:
+            if (distance_method==1): unit = "unit"
+            else: unit = "km"
             print("Result: ")
             printNodesName(path,lines)
-            print("Distance:",round(distance,2),"km\n")
+            print("Distance:",round(distance,2),"%s\n"%(unit))
     else:
         adj_m,heuristik,nodes = fileReader(lines,goal_node,distance_method,path_finder_method)
         path,distance = astar(adj_m,heuristik,start_node,goal_node)
@@ -105,9 +108,11 @@ while (True):
             print("No path found, please make sure that start node and goal node are connected\n")
             isFound = False
         else:
+            if (distance_method==1): unit = "unit"
+            else: unit = "km"
             print("Result: ")
             printNodesName(path,lines)
-            print("Distance:",round(distance,2),"km\n")
+            print("Distance:",round(distance,2),"%s\n"%(unit))
 
     # visualization
     if(isFound):

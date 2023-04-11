@@ -34,22 +34,19 @@ def getDistance(distance_method,node1,node2):
     else:
         return haversine(node1,node2)
 
-def getAdj_m(adj_m_raw,nodes_raw):
+def getAdj_m(adj_m_raw,nodes_raw,distance_method):
     n = len(adj_m_raw)
     adj_m = [[0 for i in range (n)] for j in range (n)]
     for i in range(n):
         for j in range(n):
-            if(int(adj_m_raw[i][j])==1):
-                adj_m[i][j] = haversine(nodes_raw[i],nodes_raw[j])
+            if(int(adj_m_raw[i][j])!=0):
+                adj_m[i][j] = getDistance(distance_method,nodes_raw[i],nodes_raw[j])
     return adj_m
 
 def getHeuristik(nodes_raw,goal_node,distance_method):
     heuristik = [0 for i in range(len(nodes_raw))]
     for i in range(len(nodes_raw)):
-        if (distance_method==1):
-            heuristik[i] = euclidean(nodes_raw[i],nodes_raw[goal_node])
-        else:
-            heuristik[i] = haversine(nodes_raw[i],nodes_raw[goal_node])
+        heuristik[i] = getDistance(distance_method,nodes_raw[i],nodes_raw[goal_node])
     return heuristik            
 
 def fileReader(lines,goal_node,distance_method,path_finder_method):
@@ -57,7 +54,7 @@ def fileReader(lines,goal_node,distance_method,path_finder_method):
     for i in range(len(nodes)):
         nodes[i][1] = float(nodes[i][1])
         nodes[i][2] = float(nodes[i][2])
-    adj_m = getAdj_m(adj_m_raw,nodes)
+    adj_m = getAdj_m(adj_m_raw,nodes,distance_method)
     if (path_finder_method==1):
         return adj_m, nodes
     else:
