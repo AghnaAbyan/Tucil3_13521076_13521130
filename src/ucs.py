@@ -9,6 +9,12 @@ class Node:
             self.parents.append(i)
         self.parents.append(parent_node.id)
 
+    def print(self):
+        print(self.id,", ",self.fValue,", ",self.parents)
+
+    def getDistance(self):
+        return self.fValue
+
 def fVal(adj_m, parent, node):
     return (parent.fValue + adj_m[parent.id][node])
 
@@ -28,7 +34,7 @@ def ucs(adj_m, s_node, g_node):
 
         if (current_node.id == goal_node.id):
             current_node.parents.append(current_node.id)
-            return current_node.parents
+            return current_node.parents, current_node.getDistance()
         
         for i in range(len(adj_m[0])):
             if (adj_m[current_node.id][i] != 0 and (i not in visited)):
@@ -42,25 +48,6 @@ def ucs(adj_m, s_node, g_node):
 
     return None
 
-#adj_m = [[0,5,9,0,6,0,0,0,0,0],
-#         [0,0,3,0,0,0,0,9,0,0],
-#         [0,2,0,1,0,0,0,0,0,0],
-#         [6,0,0,0,0,0,7,0,5,0],
-#         [1,0,0,2,0,2,0,0,0,0],
-#         [0,0,0,0,0,0,0,0,0,7],
-#         [0,0,0,0,2,0,0,0,0,8],
-#         [0,0,0,0,0,0,0,0,0,0],
-#         [0,0,0,0,0,0,0,0,0,0],
-#         [0,0,0,0,0,0,0,0,0,0]]
-    #path = ucs(adj_m, 0,4)
-    #print(path)
-
-#adj_m = [[0,9,7,0,0],
-#         [9,0,0,3,0],
-#         [7,0,0,4,11],
-#         [0,3,4,0,5],
-#         [0,0,11,5,0]]
-
 adj_m = [[0,2,0,5,0,0,0],
          [0,0,0,0,0,0,1],
          [0,4,0,0,0,0,0],
@@ -69,10 +56,6 @@ adj_m = [[0,2,0,5,0,0,0],
          [0,0,6,0,0,0,3],
          [0,0,0,0,7,0,0]]
 
-path = ucs(adj_m,0,6)
-print(path)
-
-# S = 0     D = 4
-# A = 1     E = 5
-# B = 2     F = 6
-# C = 3     G = 7
+path, distance = ucs(adj_m,0,6)
+print("Path: ", path)
+print("Distance: ", distance)
