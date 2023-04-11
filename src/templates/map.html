@@ -13,6 +13,7 @@
                 zoom: 15
             });
 
+            // add markers
             for (i=0;i<points.length;i++) {
                 new google.maps.Marker({
                     position: new google.maps.LatLng(points[i][1], points[i][2]),
@@ -21,6 +22,7 @@
                 });
             }
 
+            // add line to represent path
             newPath=[];
             for (i=0;i<path.length;i++) {
                 newPath.push(new google.maps.LatLng(path[i][0], path[i][1]));

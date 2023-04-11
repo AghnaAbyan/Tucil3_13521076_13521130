@@ -21,7 +21,6 @@ def astar(adj_m,heuristik,s_node,g_node):
     while len(open_nodes) > 0 :
         # sort open nodes by f values
         open_nodes.sort(key=lambda x: x.fValue)
-        # printAll(open_nodes)
 
         # visit open_nodes with smallest fValue
         current_node = open_nodes.pop(0)

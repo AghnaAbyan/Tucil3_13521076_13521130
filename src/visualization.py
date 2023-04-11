@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 def adj_mToEdges(adj_m,nodes):
+    # convert adjacency matrix to edges
     edges = []
     for i in range(len(adj_m)):
         for j in range(len(adj_m)):
@@ -10,6 +11,7 @@ def adj_mToEdges(adj_m,nodes):
     return edges
 
 def getWeight(adj_m,nodes_name,edge):
+    # get weight of an edge
     for x in range(len(nodes_name)):
         if (nodes_name[x][0] == edge[0]):
             i = x
@@ -18,6 +20,7 @@ def getWeight(adj_m,nodes_name,edge):
     return adj_m[i][j]
 
 def isPath(edge,path,nodes_name):
+    # check if an edge is in a path
     pathEdges1 = []
     pathEdges2 = []
     for i in range(len(path)-1):
@@ -29,8 +32,11 @@ def isPath(edge,path,nodes_name):
 
 def drawgraph(nodes,adj_m,path):
     G = nx.Graph()
+    # add nodes
     for i in range(len(nodes)):
         G.add_node(nodes[i][0],pos=(nodes[i][2],nodes[i][1]))
+
+    # add edges
     edges = adj_mToEdges(adj_m,nodes)
     for i in range(len(edges)):
         c = '#93B8C5'
@@ -38,6 +44,7 @@ def drawgraph(nodes,adj_m,path):
             c = 'r'
         G.add_edge(edges[i][0],edges[i][1],weight=round(getWeight(adj_m,nodes,edges[i]),2),color=c)
 
+    # draw graph
     pos = nx.get_node_attributes(G,'pos')
     labels = nx.get_edge_attributes(G,'weight')
     edges,colors = zip(*nx.get_edge_attributes(G, 'color').items())
