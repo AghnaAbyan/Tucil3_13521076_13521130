@@ -1,19 +1,4 @@
-class Node:
-    def __init__(self,id,fValue):
-        self.id = id
-        self.fValue = fValue
-        self.parents = []
-    
-    def setParent(self,parent_node):
-        for i in parent_node.parents:
-            self.parents.append(i)
-        self.parents.append(parent_node.id)
-
-    def print(self):
-        print(self.id,", ",self.fValue,", ",self.parents)
-
-    def getDistance(self):
-        return self.fValue
+from node import Node
 
 def fVal(adj_m, parent, node):
     return (parent.fValue + adj_m[parent.id][node])
@@ -34,7 +19,7 @@ def ucs(adj_m, s_node, g_node):
 
         if (current_node.id == goal_node.id):
             current_node.parents.append(current_node.id)
-            return current_node.parents, current_node.getDistance()
+            return current_node.parents, current_node.getUCSDistance()
         
         for i in range(len(adj_m[0])):
             if (adj_m[current_node.id][i] != 0 and (i not in visited)):
@@ -45,17 +30,21 @@ def ucs(adj_m, s_node, g_node):
             newNode = Node(neighbors[i], newFval)
             newNode.setParent(current_node)
             open_nodes.append(newNode)
+    return None,None
 
-    return None
-
-adj_m = [[0,2,0,5,0,0,0],
-         [0,0,0,0,0,0,1],
-         [0,4,0,0,0,0,0],
-         [0,0,0,0,2,0,6],
-         [0,0,4,0,0,3,0],
-         [0,0,6,0,0,0,3],
-         [0,0,0,0,7,0,0]]
-
-path, distance = ucs(adj_m,0,6)
-print("Path: ", path)
-print("Distance: ", distance)
+if __name__ == "__main__":
+    adj_m = [[0,75,0,140,0,0,0,0,118,0,0,0,0],
+             [75,0,71,0,0,0,0,0,0,0,0,0,0],
+             [0,71,0,151,0,0,0,0,0,0,0,0,0],
+             [140,0,151,0,99,0,80,0,0,0,0,0,0],
+             [0,0,0,99,0,211,0,0,0,0,0,0,0],
+             [0,0,0,0,211,0,0,101,0,0,0,0,0],
+             [0,0,0,80,0,0,0,97,0,0,0,120,146],
+             [0,0,0,0,0,101,97,0,0,0,0,0,138],
+             [118,0,0,0,0,0,0,0,0,111,0,0,0],
+             [0,0,0,0,0,0,0,0,111,0,70,0,0],
+             [0,0,0,0,0,0,0,0,0,70,0,75,0],
+             [0,0,0,0,0,0,120,0,0,0,75,0,0],
+             [0,0,0,0,0,0,146,138,0,0,0,0,0]]
+    path,distance = ucs(adj_m,0,5)
+    print(path,distance)

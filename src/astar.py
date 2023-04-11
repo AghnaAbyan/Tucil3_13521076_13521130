@@ -1,25 +1,4 @@
-class Node:
-    def __init__(self,id,fValue):
-        self.id = id
-        self.fValue = fValue
-        self.parents = []
-    
-    def setParent(self,parent_node):
-        for i in parent_node.parents:
-            self.parents.append(i)
-        self.parents.append(parent_node.id)
-
-    def print(self):
-        print(self.id,", ",self.fValue,", ",self.parents)
-
-    def getDistance(self,heuristik):
-        return self.fValue - heuristik[self.id]
-
-def printAll(nodes):
-    print("---")
-    for i in nodes:
-        i.print()
-    print("---")
+from node import Node
 
 def calculateFValue(adj_m, heuristik, parent_node, node):
     g = parent_node.fValue - heuristik[parent_node.id] + adj_m[parent_node.id][node]
@@ -51,7 +30,7 @@ def astar(adj_m,heuristik,s_node,g_node):
         # current node is goal node
         if current_node.id==goal_node.id:
             current_node.parents.append(current_node.id)
-            return current_node.parents, current_node.getDistance(heuristik)
+            return current_node.parents, current_node.getAStarDistance(heuristik)
 
         # find neighbors of current node
         neighbors = []
