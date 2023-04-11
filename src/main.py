@@ -24,11 +24,11 @@ while (True):
         option = int(input(">> "))
         print()
         if (option==1 or option==2):
-            print("Thank you for using Path Finder\n")
             break
         else:
             print("Invalid option, please try again\n")
     if (option==2):
+        print("Thank you for using Path Finder\n")
         break
 
     # choose file
