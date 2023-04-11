@@ -9,6 +9,7 @@ Program ini dibuat untuk memenuhi capaian kurikulum Tugas Kecil 3 IF2211 Strateg
 - [Identitas pembuat](#author)
 
 ## Deskripsi Singkat <a name="deskripsi"></a>
+Program akan menerima masukan dasar berupa matriks ketetanggaan, dengan tiap baris menyatakan satu node dan tiap kolom menyatakan hubungan node dengan node lainnya. Program akan menghasilkan keluaran berupa visualisasi graf berdasarkan matriks ketetanggan yang sudah dibuat, rute yang dicapai berdasarkan algoritma yang dipakai (UCS atau A*), dan jarak tempuh yang dicapai.
 
 ## *Requirement* Program <a name="req"></a>
 Sebelum menjalankan program, diperlukan instalasi Python 3 dikarenakan program secara keseluruhan menggunakan bahasa Python. Python dapat diunduh melalui tautan berikut: https://www.python.org/downloads/
