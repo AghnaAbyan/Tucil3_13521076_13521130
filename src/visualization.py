@@ -37,14 +37,10 @@ def drawgraph(nodes,adj_m,path):
         if (isPath(edges[i],path,nodes)):
             c = 'r'
         G.add_edge(edges[i][0],edges[i][1],weight=round(getWeight(adj_m,nodes,edges[i]),2),color=c)
-    # G.add_weighted_edges_from(edges)
 
     pos = nx.get_node_attributes(G,'pos')
     labels = nx.get_edge_attributes(G,'weight')
-    # print(labels)
-    # colors = nx.get_edge_attributes(G,'color')
     edges,colors = zip(*nx.get_edge_attributes(G, 'color').items())
-    # print(colors)
     nx.draw_networkx(G,pos)
     nx.draw_networkx_edges(G,pos,edgelist=edges,edge_color=colors)
     nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
