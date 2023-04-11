@@ -24,6 +24,7 @@ while (True):
         option = int(input(">> "))
         print()
         if (option==1 or option==2):
+            print("Thank you for using Path Finder\n")
             break
         else:
             print("Invalid option, please try again\n")
@@ -86,11 +87,13 @@ while (True):
             print("Invalid goal node, please try again\n")
 
     # path finding
+    isFound = True
     if (path_finder_method == 1):
         adj_m,nodes = fileReader(lines,goal_node,distance_method,path_finder_method)
         path,distance = ucs(adj_m,start_node,goal_node)
         if (path==None):
             print("No path found, please make sure that start node and goal node are connected\n")
+            isFound = False
         else:
             print("Result: ")
             printNodesName(path,lines)
@@ -100,32 +103,34 @@ while (True):
         path,distance = astar(adj_m,heuristik,start_node,goal_node)
         if (path==None):
             print("No path found, please make sure that start node and goal node are connected\n")
+            isFound = False
         else:
             print("Result: ")
             printNodesName(path,lines)
             print("Distance:",round(distance,2),"km\n")
 
-            # visualization
-            print("How do you want to visualize the path?")
-            print("1. Graph\n2. Map\n3. No visualization")
-            while (True):
-                visualization = int(input(">> "))
-                print()
-                if (visualization>=1 and visualization<=3):
-                    break
-                else:
-                    print("Invalid option, please try again\n")
-            
-            if (visualization==1 or visualization==2):
-                print("Exit visualization to continue\n")
-                if (visualization==1):
-                    vis.drawgraph(nodes,adj_m,path)
-                else:
-                    path = [[nodes[path[i]][1],nodes[path[i]][2]] for i in range(len(path))]
-                    # print(nodes)
-                    app = Flask(__name__)
-                    @app.route('/')
-                    def map():
-                        gmaps = googlemaps.Client(key='AIzaSyBysSbgLtum7i-eQ3_qMqiMMsVlNHe88Yw')
-                        return render_template('map.html',gmaps=gmaps,nodes=nodes,path=path)
-                    app.run(debug=False)
+    # visualization
+    if(isFound):
+        print("How do you want to visualize the path?")
+        print("1. Graph\n2. Map\n3. No visualization")
+        while (True):
+            visualization = int(input(">> "))
+            print()
+            if (visualization>=1 and visualization<=3):
+                break
+            else:
+                print("Invalid option, please try again\n")
+
+        if (visualization==1 or visualization==2):
+            print("Exit visualization to continue\n")
+            if (visualization==1):
+                vis.drawgraph(nodes,adj_m,path)
+            else:
+                path = [[nodes[path[i]][1],nodes[path[i]][2]] for i in range(len(path))]
+                # print(nodes)
+                app = Flask(__name__)
+                @app.route('/')
+                def map():
+                    gmaps = googlemaps.Client(key='AIzaSyBysSbgLtum7i-eQ3_qMqiMMsVlNHe88Yw')
+                    return render_template('map.html',gmaps=gmaps,nodes=nodes,path=path)
+                app.run(debug=False)
