@@ -159,7 +159,7 @@ while (True):
                 print("Invalid option, please try again\n")
 
         if (visualization==1 or visualization==2):
-            print("Exit visualization to continue\n")
+            print("Exit visualization to continue\n") 
             if (visualization==1):
                 vis.drawgraph(nodes,adj_m,path)
             else:
