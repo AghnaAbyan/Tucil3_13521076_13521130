@@ -4,6 +4,7 @@ from filereader import getLines,fileReader
 import visualization as vis
 from flask import Flask, render_template
 import googlemaps
+from colorama import Fore, Style
 
 def printNodesName(path,lines):
     n = (len(lines)-1)//2
@@ -14,7 +15,15 @@ def printNodesName(path,lines):
 
 
 # welcome message
-print("Welcome to Path Finder\n")
+print("Welcome to: \n")
+print(Fore.YELLOW + "     ___     ___     _____    _  _                 ___     ___     _  _      ___      ___      ___    ")
+print("    | _ \   /   \   |_   _|  | || |      o O O    | __|   |_ _|   | \| |    |   \    | __|    | _ \   ")
+print("    |  _/   | - |     | |    | __ |     o         | _|     | |    | .` |    | |) |   | _|     |   /   ")
+print("   _|_|_    |_|_|    _|_|_   |_||_|    TS__[O]   _|_|_    |___|   |_|\_|    |___/    |___|    |_|_\   ")
+print(Fore.BLUE + ' _| """ | _|"""""| _|"""""| _|"""""|  {======| _| """ | _|"""""| _|"""""| _|"""""| _|"""""| _|"""""|  ')
+print(Fore.BLACK + " ''-0-0-' ''-0-0-' ''-0-0-' ''-0-0-' ./o--000' ''-0-0-' ''-0-0-' ''-0-0-' ''-0-0-' ''-0-0-' ''-0-0-'  ")
+print(Fore.WHITE + "                                    Created by " + Fore.GREEN + "ABYAN" + Fore.WHITE + " and " + Fore.MAGENTA + "ALTHAA")
+print(Style.RESET_ALL)
 
 while (True):
     # home
@@ -28,7 +37,29 @@ while (True):
         else:
             print("Invalid option, please try again\n")
     if (option==2):
-        print("Thank you for using Path Finder\n")
+        print(Fore.CYAN + "               ___       ___                            ___          ")
+        print("              (   )     (   )                          (   )         ")
+        print("               | |_      | | .-.     .---.   ___ .-.    | |   ___    ")
+        print("              (   __)    | |/   \   / .-, \ (   )   \   | |  (   )   ")
+        print("               | |       |  .-. .  (__) ; |  |  .-. .   | |  ' /     ")
+        print("               | | ___   | |  | |    .'`  |  | |  | |   | |,' /      ")
+        print("               | |(   )  | |  | |   / .'| |  | |  | |   | .  '.      ")
+        print("               | | | |   | |  | |  | /  | |  | |  | |   | | `. \     ")
+        print("               | ' | |   | |  | |  ; |  ; |  | |  | |   | |   \ \    ")
+        print("               ' `-' ;   | |  | |  ' `-'  |  | |  | |   | |    \ .   ")
+        print("                `.__.   (___)(___) `.__.'_. (___)(___) (___ ) (___)  ")                               
+        print("                           ___  ___    .--.    ___  ___   ")
+        print("                          (   )(   )  /    \  (   )(   )  ")
+        print("                           | |  | |  |  .-. ;  | |  | |   ")
+        print("                           | |  | |  | |  | |  | |  | |   ")
+        print("                           | '  | |  | |  | |  | |  | |   ")
+        print("                           '  `-' |  | |  | |  | |  | |   ")
+        print("                            `.__. |  | '  | |  | |  ; '   ")
+        print("                            ___ | |  '  `-' /  ' `-'  /   ")
+        print("                           (   )' |   `.__.'    '.__.'    ")
+        print("                            ; `-' '                       ")
+        print("                             .__.'                        \n")
+        print(Style.RESET_ALL)
         break
 
     # choose file
@@ -55,7 +86,7 @@ while (True):
             print("Invalid option, please try again\n")
 
     # choose path finder method
-    print("Please choose path finder method:")
+    print("Please choose the path finder method:")
     print("1. UCS\n2. A*")
     while (True):
         path_finder_method = int(input(">> "))
@@ -66,6 +97,7 @@ while (True):
             print("Invalid option, please try again\n")
 
     # choose start node
+    print("The nodes are as follows:")
     p = [i for i in range((len(lines)-1)//2)]
     printNodesName(p,lines)
     print("Please choose the start node:")
@@ -93,7 +125,7 @@ while (True):
         adj_m,nodes = fileReader(lines,goal_node,distance_method,path_finder_method)
         path,distance = ucs(adj_m,start_node,goal_node)
         if (path==None):
-            print("No path found, please make sure that start node and goal node are connected\n")
+            print("No path found, please make sure that both start node and goal node are connected\n")
             isFound = False
         else:
             if (distance_method==1): unit = "unit"
@@ -105,7 +137,7 @@ while (True):
         adj_m,heuristik,nodes = fileReader(lines,goal_node,distance_method,path_finder_method)
         path,distance = astar(adj_m,heuristik,start_node,goal_node)
         if (path==None):
-            print("No path found, please make sure that start node and goal node are connected\n")
+            print("No path found, please make sure that both start node and goal node are connected\n")
             isFound = False
         else:
             if (distance_method==1): unit = "unit"
