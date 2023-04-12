@@ -52,8 +52,14 @@ Diperlukan juga instalasi beberapa *library* dari python supaya keseluruhan prog
 
   - Jika 1 dipilih, akan menampilkan graf sebagai berikut:
 
-![FigureTC3](https://user-images.githubusercontent.com/110531746/231337307-6227a075-d943-4ab1-87ac-e3bee0d336ce.png)
+  ![FigureTC3](https://user-images.githubusercontent.com/110531746/231337307-6227a075-d943-4ab1-87ac-e3bee0d336ce.png)
 
+    Garis merah menunjukkan rute yang dilalui oleh algoritma.
+
+  - Jika 2  dipilih, akan menampilkan map sebagai berikut:
+  
+  ![WhatsApp Image 2023-04-12 at 11 26 12](https://user-images.githubusercontent.com/110531746/231349821-eba92a28-8c99-4c8f-af4b-daf325ad2361.jpg)
+  
     Garis merah menunjukkan rute yang dilalui oleh algoritma.
 
 <img width="233" alt="image" src="https://user-images.githubusercontent.com/110531746/231337502-46ea6957-91f9-41e0-b595-c55bc3f2ee99.png">
