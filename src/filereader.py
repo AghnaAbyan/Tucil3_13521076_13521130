@@ -6,6 +6,7 @@ def getLines(fileName):
     for line in file:
         line = line.rstrip()
         lines.append(line)
+    file.close()
     return lines
 
 def processNodes(lines):
