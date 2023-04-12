@@ -30,9 +30,10 @@ while (True):
     print("Please choose an option:")
     print("1. Run Path Finder\n2. Exit")
     while (True):
-        option = int(input(">> "))
+        option = input(">> ")
         print()
-        if (option==1 or option==2):
+        if (option=='1' or option=='2'):
+            option = int(option)
             break
         else:
             print("Invalid option, please try again\n")
@@ -78,9 +79,10 @@ while (True):
     print("1. Euclidean, use this if your nodes position is in cartesian coordinate")
     print("2. Haversine, use this if your nodes position is in latitude and longitude")
     while (True):
-        distance_method = int(input(">> "))
+        distance_method = input(">> ")
         print()
-        if (distance_method==1 or distance_method==2):
+        if (distance_method=='1' or distance_method=='2'):
+            distance_method = int(distance_method)
             break
         else:
             print("Invalid option, please try again\n")
@@ -89,9 +91,10 @@ while (True):
     print("Please choose the path finder method:")
     print("1. UCS\n2. A*")
     while (True):
-        path_finder_method = int(input(">> "))
+        path_finder_method = input(">> ")
         print()
-        if (path_finder_method==1 or path_finder_method==2):
+        if (path_finder_method=='1' or path_finder_method=='2'):
+            path_finder_method = int(path_finder_method)
             break
         else:
             print("Invalid option, please try again\n")
@@ -102,9 +105,10 @@ while (True):
     printNodesName(p,lines)
     print("Please choose the start node:")
     while (True):
-        start_node = int(input(">> "))-1
+        start_node = input(">> ")
         print()
-        if (start_node >= 0 and start_node < int(lines[0])):
+        if (int(start_node)-1 >= 0 and int(start_node)-1 < int(lines[0])):
+            start_node = int(start_node)-1
             break
         else:
             print("Invalid start node, please try again\n")
@@ -112,9 +116,10 @@ while (True):
     # choose goal node
     print("Please choose the goal node:")
     while (True):
-        goal_node = int(input(">> "))-1
+        goal_node = input(">> ")
         print()
-        if (goal_node >= 0 and goal_node < int(lines[0])):
+        if (int(goal_node)-1 >= 0 and int(goal_node)-1 < int(lines[0])):
+            goal_node = int(goal_node)-1
             break
         else:
             print("Invalid goal node, please try again\n")
@@ -151,9 +156,10 @@ while (True):
         print("How do you want to visualize the path?")
         print("1. Graph\n2. Map\n3. No visualization")
         while (True):
-            visualization = int(input(">> "))
+            visualization = input(">> ")
             print()
-            if (visualization>=1 and visualization<=3):
+            if (visualization=='1' or visualization=='2' or visualization<='3'):
+                visualization = int(visualization)
                 break
             else:
                 print("Invalid option, please try again\n")
